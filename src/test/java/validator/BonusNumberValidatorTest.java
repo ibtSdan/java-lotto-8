@@ -25,6 +25,11 @@ public class BonusNumberValidatorTest {
             assertDoesNotThrow(() -> BonusNumberValidator.checkLottoNumberRange("24"));
         }
 
+        @Test
+        void checkBonusNotInWinningNumbers_성공(){
+            assertDoesNotThrow(() -> BonusNumberValidator.checkBonusNotInWinningNumbers(3, List.of(1,2,4,5,6,7)));
+        }
+
     }
 
     @Nested
@@ -46,6 +51,12 @@ public class BonusNumberValidatorTest {
         @Test
         void 범위를_벗어나는_입력(){
             assertThatThrownBy(() -> BonusNumberValidator.checkLottoNumberRange("46"))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void 당첨_숫자와_중복되면_예외(){
+            assertThatThrownBy(() -> BonusNumberValidator.checkBonusNotInWinningNumbers(10, List.of(1,2,3,10,30,36)))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }

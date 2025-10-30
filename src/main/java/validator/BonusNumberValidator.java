@@ -16,4 +16,10 @@ public class BonusNumberValidator {
             throw new IllegalArgumentException("[ERROR] 로또 숫자는 1이상 45이하의 정수여야 합니다.");
         }
     }
+
+    public static void checkBonusNotInWinningNumbers(Integer bonusNumber, List<Integer> winningNumbers){
+        if (winningNumbers.contains(bonusNumber)){
+            throw new IllegalArgumentException("[ERROR] 보너스 숫자는 당첨 숫자와 중복될 수 없습니다.");
+        }
+    }
 }
