@@ -20,6 +20,6 @@ public enum ErrorMessage {
     }
 
     public String getMessage(){
-        return "[ERROR}: " + message;
+        return "[ERROR]: " + message;
     }
 }

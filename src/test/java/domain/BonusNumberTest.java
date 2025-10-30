@@ -1,5 +1,6 @@
 package domain;
 
+import message.ErrorMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -34,25 +35,29 @@ public class BonusNumberTest {
         @Test
         void 빈_문자열_입력(){
             assertThatThrownBy(() -> new BonusNumber("", wn))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(ErrorMessage.EMPTY_INPUT.getMessage());
         }
 
         @Test
         void 숫자가_아닌_입력(){
             assertThatThrownBy(() -> new BonusNumber("a", wn))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(ErrorMessage.INVALID_LOTTO_NUMBER_RANGE.getMessage());
         }
 
         @Test
         void 범위를_벗어나는_입력(){
             assertThatThrownBy(() -> new BonusNumber("46", wn))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(ErrorMessage.INVALID_LOTTO_NUMBER_RANGE.getMessage());
         }
 
         @Test
         void 당첨_숫자와_중복되면_예외(){
             assertThatThrownBy(() -> new BonusNumber("1", wn))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(ErrorMessage.BONUS_NUMBER_DUPLICATE.getMessage());
         }
     }
 }
