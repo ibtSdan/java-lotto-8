@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,7 +9,9 @@ public class WinningNumbers {
 
     public WinningNumbers(String input){
         validateNotEmpty(input);
-        List<String> tokens = List.of(input.split(","));
+        List<String> tokens = Arrays.stream(input.split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
         validateSize(tokens);
         validateLottoNumberRange(tokens);
         this.winningNumbers = tokens.stream().map(Integer::parseInt).collect(Collectors.toList());
