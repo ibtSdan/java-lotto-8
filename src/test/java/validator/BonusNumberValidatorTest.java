@@ -4,6 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -18,6 +20,11 @@ public class BonusNumberValidatorTest {
             assertDoesNotThrow(() -> BonusNumberValidator.notEmpty("a"));
         }
 
+        @Test
+        void checkLottoNumberRange_성공(){
+            assertDoesNotThrow(() -> BonusNumberValidator.checkLottoNumberRange("24"));
+        }
+
     }
 
     @Nested
@@ -27,6 +34,18 @@ public class BonusNumberValidatorTest {
         @Test
         void 빈_문자열_입력(){
             assertThatThrownBy(() -> BonusNumberValidator.notEmpty(""))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void 숫자가_아닌_입력(){
+            assertThatThrownBy(() -> BonusNumberValidator.checkLottoNumberRange("a"))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void 범위를_벗어나는_입력(){
+            assertThatThrownBy(() -> BonusNumberValidator.checkLottoNumberRange("46"))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
