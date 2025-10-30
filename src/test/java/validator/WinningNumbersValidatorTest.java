@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,6 +25,11 @@ public class WinningNumbersValidatorTest {
         void checkSize_성공(){
             assertDoesNotThrow(() -> WinningNumbersValidator.checkSize(List.of("a", "b", "c", "d", "e", "f")));
         }
+
+        @Test
+        void checkAllNumeric_성공(){
+            assertDoesNotThrow(() -> WinningNumbersValidator.checkLottoNumberRange(List.of("1", "2", "3", "4", "5", "6")));
+        }
     }
 
     @Nested
@@ -39,6 +45,18 @@ public class WinningNumbersValidatorTest {
         @Test
         void 길이가_6이_아닌_입력(){
             assertThatThrownBy(() -> WinningNumbersValidator.checkSize(List.of("a", "b")))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void 숫자가_아닌_입력(){
+            assertThatThrownBy(() -> WinningNumbersValidator.checkLottoNumberRange(List.of("1", "3", "43", "5", "17", "1a")))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void 범위를_벗어나는_입력(){
+            assertThatThrownBy(() -> WinningNumbersValidator.checkLottoNumberRange(List.of("1", "3", "47", "5", "17", "18")))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
