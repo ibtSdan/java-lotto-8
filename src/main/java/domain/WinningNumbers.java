@@ -1,5 +1,7 @@
 package domain;
 
+import message.ErrorMessage;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,20 +21,20 @@ public class WinningNumbers {
 
     private void validateNotEmpty(String input){
         if (input == null || input.isBlank()){
-            throw new IllegalArgumentException("[ERROR] 입력값이 비어있습니다.");
+            throw new IllegalArgumentException(ErrorMessage.EMPTY_INPUT.getMessage());
         }
     }
 
     private void validateSize(List<String> tokens){
         if (tokens.size() != 6){
-            throw new IllegalArgumentException("[ERROR] 당첨 숫자는 6개여야 합니다.");
+            throw new IllegalArgumentException(ErrorMessage.INVALID_WINNING_NUMBER_COUNT.getMessage());
         }
     }
 
     private void validateLottoNumberRange(List<String> tokens){
         for (String token : tokens){
             if (!token.matches("[1-9]|[1-3][0-9]|4[0-5]")){
-                throw new IllegalArgumentException("[ERROR] 당첨 숫자는 1이상 45이하의 정수여야 합니다.");
+                throw new IllegalArgumentException(ErrorMessage.INVALID_LOTTO_NUMBER_RANGE.getMessage());
             }
         }
     }
