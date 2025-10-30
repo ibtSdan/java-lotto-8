@@ -16,6 +16,13 @@ public class PurchaseAmountValidator {
         }
     }
 
+    public static void checkIntegerRange(String input){
+        String maxInt = "2147483647";
+        if (input.compareTo(maxInt) > 0){
+            throw new IllegalArgumentException("[ERROR] 입력값이 너무 큽니다.");
+        }
+    }
+
     public static void multipleOfThousand(Integer money){
         if (money % 1000 != 0){
             throw new IllegalArgumentException("[ERROR] 구입 금액은 1,000원 단위어야 합니다.");

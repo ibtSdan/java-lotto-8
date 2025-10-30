@@ -26,6 +26,11 @@ public class PurchaseAmountValidatorTest {
         }
 
         @Test
+        void checkIntegerRange_정상(){
+            assertDoesNotThrow(() -> PurchaseAmountValidator.checkIntegerRange("2147483647"));
+        }
+
+        @Test
         void multipleOfThousand_정상(){
             assertDoesNotThrow(() -> PurchaseAmountValidator.multipleOfThousand(3000));
         }
@@ -57,6 +62,11 @@ public class PurchaseAmountValidatorTest {
         void zero_입력(){
             assertThatThrownBy(() -> PurchaseAmountValidator.positive("0"))
                     .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void 정수_범위를_벗어나는_입력(){
+            assertThatThrownBy(() -> PurchaseAmountValidator.checkIntegerRange("2147483648"));
         }
 
         @Test
