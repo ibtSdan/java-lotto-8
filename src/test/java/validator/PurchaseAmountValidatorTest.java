@@ -18,5 +18,23 @@ public class PurchaseAmountValidatorTest {
             assertThatThrownBy(() -> PurchaseAmountValidator.notEmpty(""))
                     .isInstanceOf(IllegalArgumentException.class);
         }
+
+        @Test
+        void 문자_입력(){
+            assertThatThrownBy(() -> PurchaseAmountValidator.positive("a"))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void 음수_입력(){
+            assertThatThrownBy(() -> PurchaseAmountValidator.positive("-3"))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void zero_입력(){
+            assertThatThrownBy(() -> PurchaseAmountValidator.positive("0"))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
     }
 }
