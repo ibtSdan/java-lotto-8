@@ -39,4 +39,8 @@ public class PurchaseAmount {
             throw new IllegalArgumentException(ErrorMessage.NOT_MULTIPLE_OF_THOUSAND.getMessage());
         }
     }
+
+    public int getValue() {
+        return value;
+    }
 }
