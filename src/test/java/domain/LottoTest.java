@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LottoTest {
@@ -19,6 +20,13 @@ class LottoTest {
         @Test
         void 성공(){
             Assertions.assertDoesNotThrow(() -> new Lotto(List.of(1,2,3,4,5,6)));
+        }
+
+        @Test
+        void 오름차순_정렬_성공(){
+            Lotto result = new Lotto(List.of(3,4,2,1,5,6));
+
+            assertThat(result.getNumbers()).isEqualTo(List.of(1,2,3,4,5,6));
         }
 
     }
