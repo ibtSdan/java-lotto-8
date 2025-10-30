@@ -11,7 +11,7 @@ public class PurchaseAmountValidator {
     }
 
     public static void positive(String input){
-        if (!input.matches("0*[1-9]\\d+")){
+        if (!input.matches("[1-9]\\d*")){
             throw new IllegalArgumentException("[ERROR] 구입 금액은 양수여야 합니다.");
         }
     }
