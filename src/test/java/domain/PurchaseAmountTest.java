@@ -16,7 +16,7 @@ public class PurchaseAmountTest {
 
         @Test
         void 정상_입력_성공(){
-            assertDoesNotThrow(() -> PurchaseAmountValidator.multipleOfThousand(3000));
+            assertDoesNotThrow(() -> new PurchaseAmount("3000"));
         }
     }
 

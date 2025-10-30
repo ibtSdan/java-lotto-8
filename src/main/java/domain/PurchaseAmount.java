@@ -27,7 +27,7 @@ public class PurchaseAmount {
 
     private void validateIntegerRange(String input){
         String maxInt = "2147483647";
-        if (input.compareTo(maxInt) > 0){
+        if (input.length()>10 || input.length()==10 && input.compareTo(maxInt) > 0){
             throw new IllegalArgumentException("[ERROR] 입력값이 너무 큽니다.");
         }
     }
