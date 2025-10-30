@@ -1,0 +1,64 @@
+package controller;
+
+import domain.BonusNumber;
+import domain.Lotto;
+import domain.PurchaseAmount;
+import domain.WinningNumbers;
+import generator.NumberGenerator;
+import message.ErrorMessage;
+import provider.InputProvider;
+import service.LottoService;
+
+import java.util.List;
+
+public class LottoController {
+    private final InputProvider provider;
+    private final NumberGenerator generator;
+    private final LottoService  service;
+
+    public LottoController(InputProvider provider, NumberGenerator generator, LottoService service) {
+        this.provider = provider;
+        this.generator = generator;
+        this.service = service;
+    }
+
+    public void run(){
+        PurchaseAmount purchaseAmount = inputPurchaseAmount();
+        List<Lotto> lottos = service.purchaseLotto(purchaseAmount);
+        // 로또 출력
+        WinningNumbers winningNumbers = inputWinningNumbers();
+        BonusNumber bonusNumber = inputBonusNumber(winningNumbers);
+        // 결과 출력
+    }
+
+    // 제너릭으로 리팩토링 할 부분
+    private PurchaseAmount inputPurchaseAmount(){
+        while (true){
+            try{
+                return new PurchaseAmount(provider.input());
+            } catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private WinningNumbers inputWinningNumbers(){
+        while (true){
+            try{
+                return new WinningNumbers(provider.input());
+            } catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private BonusNumber inputBonusNumber(WinningNumbers winningNumbers){
+        while (true){
+            try{
+                return new BonusNumber(provider.input(), winningNumbers);
+            } catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+}
