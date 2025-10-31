@@ -9,16 +9,19 @@ import message.ErrorMessage;
 import provider.InputProvider;
 import service.LottoService;
 import view.InputView;
+import view.OutputView;
 
 import java.util.List;
 
 public class LottoController {
     private final InputView inputView;
+    private final OutputView outputView;
     private final NumberGenerator generator;
     private final LottoService  service;
 
-    public LottoController(InputView inputView, NumberGenerator generator, LottoService service) {
+    public LottoController(InputView inputView, OutputView outputView, NumberGenerator generator, LottoService service) {
         this.inputView = inputView;
+        this.outputView = outputView;
         this.generator = generator;
         this.service = service;
     }
@@ -26,7 +29,8 @@ public class LottoController {
     public void run(){
         PurchaseAmount purchaseAmount = inputPurchaseAmount();
         List<Lotto> lottos = service.purchaseLotto(purchaseAmount);
-        // 로또 출력
+        outputView.printPurchaseCount(purchaseAmount.getValue()/1000);
+        outputView.printLottos(lottos);
         WinningNumbers winningNumbers = inputWinningNumbers();
         BonusNumber bonusNumber = inputBonusNumber(winningNumbers);
         // 결과 출력
