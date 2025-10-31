@@ -8,16 +8,17 @@ import generator.NumberGenerator;
 import message.ErrorMessage;
 import provider.InputProvider;
 import service.LottoService;
+import view.InputView;
 
 import java.util.List;
 
 public class LottoController {
-    private final InputProvider provider;
+    private final InputView inputView;
     private final NumberGenerator generator;
     private final LottoService  service;
 
-    public LottoController(InputProvider provider, NumberGenerator generator, LottoService service) {
-        this.provider = provider;
+    public LottoController(InputView inputView, NumberGenerator generator, LottoService service) {
+        this.inputView = inputView;
         this.generator = generator;
         this.service = service;
     }
@@ -35,7 +36,7 @@ public class LottoController {
     private PurchaseAmount inputPurchaseAmount(){
         while (true){
             try{
-                return new PurchaseAmount(provider.input());
+                return new PurchaseAmount(inputView.inputPurchaseAmount());
             } catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
             }
@@ -45,7 +46,7 @@ public class LottoController {
     private WinningNumbers inputWinningNumbers(){
         while (true){
             try{
-                return new WinningNumbers(provider.input());
+                return new WinningNumbers(inputView.inputWinningNumbers());
             } catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
             }
@@ -55,7 +56,7 @@ public class LottoController {
     private BonusNumber inputBonusNumber(WinningNumbers winningNumbers){
         while (true){
             try{
-                return new BonusNumber(provider.input(), winningNumbers);
+                return new BonusNumber(inputView.inputBonusNumber(), winningNumbers);
             } catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
             }
