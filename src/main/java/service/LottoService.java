@@ -1,7 +1,6 @@
 package service;
 
-import domain.Lotto;
-import domain.PurchaseAmount;
+import domain.*;
 import generator.NumberGenerator;
 
 import java.util.ArrayList;
@@ -22,5 +21,21 @@ public class LottoService {
             lottos.add(new Lotto(numbers));
         }
         return lottos;
+    }
+
+    public LottoResult calculateResult(List<Lotto> lottos, WinningNumbers winningNumbers, BonusNumber bonusNumber){
+        LottoResult result = new LottoResult();
+
+        for(Lotto lotto : lottos){
+            int matchCount = (int) lotto.getNumbers().stream()
+                    .filter(winningNumbers.getWinningNumbers()::contains)
+                    .count();
+            boolean matchBonus = lotto.getNumbers().contains(bonusNumber.getBonusNumber());
+
+            Rank rank = Rank.of(matchCount, matchBonus);
+            result.addRank(rank);
+        }
+
+        return result;
     }
 }

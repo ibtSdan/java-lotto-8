@@ -1,9 +1,6 @@
 package controller;
 
-import domain.BonusNumber;
-import domain.Lotto;
-import domain.PurchaseAmount;
-import domain.WinningNumbers;
+import domain.*;
 import generator.NumberGenerator;
 import message.ErrorMessage;
 import provider.InputProvider;
@@ -33,7 +30,9 @@ public class LottoController {
         outputView.printLottos(lottos);
         WinningNumbers winningNumbers = inputWinningNumbers();
         BonusNumber bonusNumber = inputBonusNumber(winningNumbers);
-        // 결과 출력
+
+        LottoResult result = service.calculateResult(lottos, winningNumbers, bonusNumber);
+        outputView.printResult(result);
     }
 
     // 제너릭으로 리팩토링 할 부분
