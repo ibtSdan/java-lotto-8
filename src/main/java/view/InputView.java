@@ -25,6 +25,8 @@ public class InputView {
     }
 
     private String getInput() {
-        return provider.input();
+        String input = provider.input();
+        System.out.println();
+        return input;
     }
 }
