@@ -32,7 +32,8 @@ public class LottoController {
         BonusNumber bonusNumber = inputBonusNumber(winningNumbers);
 
         LottoResult result = service.calculateResult(lottos, winningNumbers, bonusNumber);
-        outputView.printResult(result);
+        double profitRate = service.calculateProfitRate(result, purchaseAmount);
+        outputView.printResult(result, profitRate);
     }
 
     // 제너릭으로 리팩토링 할 부분

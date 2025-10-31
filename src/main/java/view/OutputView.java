@@ -20,7 +20,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printResult(LottoResult result){
+    public void printResult(LottoResult result, double profitRate){
         System.out.println("당첨 통계");
         System.out.println("---");
         Map<Rank, Integer> map = result.getResult();
@@ -29,6 +29,7 @@ public class OutputView {
         System.out.printf("5개 일치 (1,500,000원) - %d개%n", map.get(Rank.THIRD));
         System.out.printf("5개 일치, 보너스 볼 일치 (30,000,000원) - %d개%n", map.get(Rank.SECOND));
         System.out.printf("6개 일치 (2,000,000,000원) - %d개%n", map.get(Rank.FIRST));
+        System.out.printf("총 수익률은 %.1f%%입니다.%n", profitRate);
     }
 
     public void printError(String message){
