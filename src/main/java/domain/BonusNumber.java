@@ -1,6 +1,7 @@
 package domain;
 
 
+import constants.LottoConstants;
 import message.ErrorMessage;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class BonusNumber {
     }
 
     private void validateLottoNumberRange(String input){
-        if (!input.matches("[1-9]|[1-3][0-9]|4[0-5]")){
+        if (!input.matches(LottoConstants.LOTTO_NUMBER_REGEX)){
             throw new IllegalArgumentException(ErrorMessage.INVALID_LOTTO_NUMBER_RANGE.getMessage());
         }
     }

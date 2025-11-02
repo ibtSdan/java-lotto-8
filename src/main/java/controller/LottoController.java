@@ -29,7 +29,7 @@ public class LottoController {
                 () -> new PurchaseAmount(inputView.inputPurchaseAmount())
         );
         List<Lotto> lottos = service.purchaseLotto(purchaseAmount);
-        outputView.printPurchaseCount(purchaseAmount.getValue()/1000);
+        outputView.printPurchaseCount(purchaseAmount.countLottos());
         outputView.printLottos(lottos);
 
         WinningNumbers winningNumbers = retryUntilValid(
@@ -49,7 +49,7 @@ public class LottoController {
             try {
                 return supplier.get();
             } catch (IllegalArgumentException e){
-                System.out.println(e.getMessage());
+                outputView.printError(e.getMessage());
             }
         }
     }

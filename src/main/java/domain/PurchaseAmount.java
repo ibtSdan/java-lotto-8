@@ -4,6 +4,10 @@ package domain;
 import message.ErrorMessage;
 
 public class PurchaseAmount {
+    private static final String POSITIVE_NUMBER_REGEX = "[1-9]\\d*";
+    private static final int LOTTO_PRICE = 1000;
+    private static final String MAX_INT_STRING = "2147483647";
+
     private final int value;
 
     public PurchaseAmount(String input){
@@ -22,22 +26,25 @@ public class PurchaseAmount {
     }
 
     private void validatePositive(String input){
-        if (!input.matches("[1-9]\\d*")){
+        if (!input.matches(POSITIVE_NUMBER_REGEX)){
             throw new IllegalArgumentException(ErrorMessage.NOT_POSITIVE.getMessage());
         }
     }
 
     private void validateIntegerRange(String input){
-        String maxInt = "2147483647";
-        if (input.length()>10 || input.length()==10 && input.compareTo(maxInt) > 0){
+        if (input.length()>10 || input.length()==10 && input.compareTo(MAX_INT_STRING) > 0){
             throw new IllegalArgumentException(ErrorMessage.LARGE_INPUT.getMessage());
         }
     }
 
     private void validateMultipleOfThousand(Integer money){
-        if (money % 1000 != 0){
+        if (money % LOTTO_PRICE != 0){
             throw new IllegalArgumentException(ErrorMessage.NOT_MULTIPLE_OF_THOUSAND.getMessage());
         }
+    }
+
+    public int countLottos(){
+        return value / LOTTO_PRICE;
     }
 
     public int getValue() {

@@ -1,5 +1,6 @@
 package domain;
 
+import constants.LottoConstants;
 import message.ErrorMessage;
 
 import java.util.Arrays;
@@ -7,11 +8,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class WinningNumbers {
+    private static final String NUMBER_SEPARATOR = ",";
     private final List<Integer> winningNumbers;
 
     public WinningNumbers(String input){
         validateNotEmpty(input);
-        List<String> tokens = Arrays.stream(input.split(","))
+        List<String> tokens = Arrays.stream(input.split(NUMBER_SEPARATOR))
                 .map(String::trim)
                 .collect(Collectors.toList());
         validateSize(tokens);
@@ -26,14 +28,14 @@ public class WinningNumbers {
     }
 
     private void validateSize(List<String> tokens){
-        if (tokens.size() != 6){
+        if (tokens.size() != LottoConstants.LOTTO_SIZE){
             throw new IllegalArgumentException(ErrorMessage.INVALID_WINNING_NUMBER_COUNT.getMessage());
         }
     }
 
     private void validateLottoNumberRange(List<String> tokens){
         for (String token : tokens){
-            if (!token.matches("[1-9]|[1-3][0-9]|4[0-5]")){
+            if (!token.matches(LottoConstants.LOTTO_NUMBER_REGEX)){
                 throw new IllegalArgumentException(ErrorMessage.INVALID_LOTTO_NUMBER_RANGE.getMessage());
             }
         }

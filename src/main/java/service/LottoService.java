@@ -14,7 +14,7 @@ public class LottoService {
     }
 
     public List<Lotto> purchaseLotto(PurchaseAmount amount){
-        int count = amount.getValue()/1000;
+        int count = amount.countLottos();
         List<Lotto> lottos = new ArrayList<>();
         for (int i = 0; i < count; i++){
             List<Integer> numbers = generator.generateNumbers();
