@@ -1,6 +1,5 @@
 package domain;
 
-
 import message.ErrorMessage;
 
 public class PurchaseAmount {
