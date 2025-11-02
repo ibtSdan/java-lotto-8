@@ -9,6 +9,7 @@ import view.InputView;
 import view.OutputView;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class LottoController {
     private final InputView inputView;
@@ -24,43 +25,29 @@ public class LottoController {
     }
 
     public void run(){
-        PurchaseAmount purchaseAmount = inputPurchaseAmount();
+        PurchaseAmount purchaseAmount = retryUntilValid(
+                () -> new PurchaseAmount(inputView.inputPurchaseAmount())
+        );
         List<Lotto> lottos = service.purchaseLotto(purchaseAmount);
         outputView.printPurchaseCount(purchaseAmount.getValue()/1000);
         outputView.printLottos(lottos);
-        WinningNumbers winningNumbers = inputWinningNumbers();
-        BonusNumber bonusNumber = inputBonusNumber(winningNumbers);
+
+        WinningNumbers winningNumbers = retryUntilValid(
+                () -> new WinningNumbers(inputView.inputWinningNumbers())
+        );
+        BonusNumber bonusNumber = retryUntilValid(
+                () -> new BonusNumber(inputView.inputBonusNumber(), winningNumbers)
+        );
 
         LottoResult result = service.calculateResult(lottos, winningNumbers, bonusNumber);
         double profitRate = service.calculateProfitRate(result, purchaseAmount);
         outputView.printResult(result, profitRate);
     }
 
-    // 제너릭으로 리팩토링 할 부분
-    private PurchaseAmount inputPurchaseAmount(){
+    private <T> T retryUntilValid(Supplier<T> supplier){
         while (true){
-            try{
-                return new PurchaseAmount(inputView.inputPurchaseAmount());
-            } catch (IllegalArgumentException e){
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
-    private WinningNumbers inputWinningNumbers(){
-        while (true){
-            try{
-                return new WinningNumbers(inputView.inputWinningNumbers());
-            } catch (IllegalArgumentException e){
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
-    private BonusNumber inputBonusNumber(WinningNumbers winningNumbers){
-        while (true){
-            try{
-                return new BonusNumber(inputView.inputBonusNumber(), winningNumbers);
+            try {
+                return supplier.get();
             } catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
             }
